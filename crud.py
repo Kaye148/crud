@@ -41,20 +41,20 @@ def encontar_cliente_por_nome(lista_clientes, nome_buscar):
     return None # None significa retornar vazio, sem conteúdo.
 
 # Função para mostar todos os clientes.
-def mostar_todos_clientes(lista_clientes):
+def mostrar_todos_clientes(lista_clientes):
     if lista_esta_vazia(lista_clientes):
         return
     
     print("\n--- Lista de Clientes ---")
     for cliente in lista_clientes:
-        print(f"{cliente.mostar_dados()}")
+        cliente.mostrar_dados()
 
 # Função para atualizar clientes.
 def atualizar_clientes(lista_clientes):
     if lista_esta_vazia(lista_clientes):
         return
     # Mostar a lista para ajudar o usuário.
-    mostar_todos_clientes(lista_clientes)
+    mostrar_todos_clientes(lista_clientes)
     print("--- Atualizar dados do cliente ---")
     nome_buscar = input("\nDigite o nome do cliente: ")
     cliente_para_atualizar = encontar_cliente_por_nome(lista_clientes, nome_buscar)
@@ -63,13 +63,13 @@ def atualizar_clientes(lista_clientes):
         print("\nPessoa encontrada.")
         print("\n Digite os novos dados ou deixe em branco para manter o valor atual.")
 
-        print("\nNome atual: {cliente_para_atualizar.nome}")
+        print(f"\nNome atual: {cliente_para_atualizar.nome}")
         novo_nome = input("novo_nome")
 
-        print("\nE-mail atual: {cliente_para_atualizar.email}")
+        print(f"\nE-mail atual: {cliente_para_atualizar.email}")
         novo_email = input("Novo E-mail")
 
-        print("\nTelefone atual: {cliente_para_atualizar.telefone}")
+        print(f"\nTelefone atual: {cliente_para_atualizar.telefone}")
         novo_telefone = input(f" Novo mome: ()")
 
         if novo_nome:
@@ -82,3 +82,50 @@ def atualizar_clientes(lista_clientes):
         print(f"\nDados do cliente: {nome_buscar} atualizados com sucesso!")
     else:
         print(f"\nCliente com nome { nome_buscar} não encontrado.")
+
+#Função para excluir um cliente.
+def excluir_cliente(lista_cliente):
+    if lista_esta_vazia(lista_cliente):
+        return
+    
+    mostrar_todos_clientes(lista_clientes)
+
+    nome_buscar = input("\nDigite o nome do cliente que deseja excluir: ")
+
+    cliente_para_remover = encontar_cliente_por_nome(lista_clientes, nome_buscar)
+
+    if cliente_para_remover:
+        lista_clientes.remove(cliente_para_remover)
+        print(f"\nCliente com o nome {nome_buscar} não encontrado. ")
+
+#Mostar menu.
+while True:
+    print("""
+--- Gerenciador de Clientes ---
+1 - Adicionar
+2 - Mostar todos
+3 - Atualizar 
+4 - Excluir
+0 - Sair
+""")
+    
+    opcao = int(input("Digite uma das opções acima: "))
+
+    match opcao:
+        case 1:
+            adicionar_clientes(lista_clientes)
+        case 2:
+            mostrar_todos_clientes(lista_clientes)
+        case 3:
+            atualizar_clientes(lista_clientes)
+        case 4:
+            excluir_cliente(lista_clientes)
+        case 0:
+            print("\nSaindo do programa. . . ")
+        case _:
+            print("\nOpção inválida. \nTente novamente. . . ")
+
+    if opcao != 1 and opcao != 0:
+        time.sleep(4)
+    elif opcao == 1:
+        time.sleep(1)
